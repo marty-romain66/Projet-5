@@ -1,15 +1,38 @@
-let url = "http://localhost:3000/api/products"
-fetch(url).then(reponse => reponse.json().then(data => {
-    console.log(data)
-    let affichage = ``
-    for (let nom of data) {
-        affichage += `<a href="./product.html?id=${nom._id}"><article><img src="${nom.imageUrl}" alt="${nom.altTxt}""><h3>${nom.name}</h3><p>${nom.description}</p></article>`;
-    }
+let url = "http://localhost:3000/api/products/";
+const getArticles = () => {
+  fetch(url)
+    .then(function (reponse) {
+      return reponse.json();
+    })
 
-    affichage += "</a>"
-    newFunction(affichage);
-}))
+    .then(function (data) {
+      console.log(data);
+      const listeProduct = data;
+      for (products in listeProduct) {
+        let productsCard = document.createElement("a");
+        productsCard.setAttribute(
+          "href",
+          "./product.html?id=" + listeProduct[products]._id
+        );
+        document.getElementById("items").appendChild(productsCard);
 
-function newFunction(affichage) {
-    document.getElementById("items").innerHTML = affichage;
-}
+        let card = document.createElement("article");
+        productsCard.appendChild(card);
+
+        let cardImg = document.createElement("img");
+        cardImg.setAttribute("src", listeProduct[products].imageUrl);
+        card.appendChild(cardImg);
+
+        let cardTitle = document.createElement("h3");
+        cardTitle.innerHTML = listeProduct[products].name;
+        card.appendChild(cardTitle);
+
+        let cardDescription = document.createElement("p");
+        cardDescription.innerHTML = listeProduct[products].description;
+        card.appendChild(cardDescription);
+      }
+    });
+};
+
+getArticles();
+
