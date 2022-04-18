@@ -1,4 +1,6 @@
+//  url = url de l'api
 let url = "http://localhost:3000/api/products/";
+// cration fonction d'appel de l'api
 const getArticles = () => {
   fetch(url)
     .then(function (reponse) {
@@ -8,6 +10,7 @@ const getArticles = () => {
     .then(function (data) {
       console.log(data);
       const listeProduct = data;
+      //  Pour chaque produit dans le tableau de l'api on creer
       for (products in listeProduct) {
         let productsCard = document.createElement("a");
         productsCard.setAttribute(
@@ -33,6 +36,7 @@ const getArticles = () => {
       }
     });
 };
+//  appel de la fonction 
 
 getArticles();
 
